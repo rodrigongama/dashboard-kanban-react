@@ -1,0 +1,54 @@
+.modalOverlay {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9;
+    .modalContainer {
+        width: 400px;
+        height: 250px;
+        background: #fff;
+        padding: 25px;
+        border-radius: 10px;
+        text-align: center;
+        z-index: 10;
+        input {
+            margin: 30px 0;
+            width: 240px;
+            height: 30px;
+        }
+        .Modalbuttons {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            button {
+                width: 150px;
+                padding: 12px;
+                font-size: 16px;
+                border-radius: 10px;
+                border: none;
+                margin-top: 10px;
+                transition: 0.5s;
+                &:first-child {
+                    background-color: #ddd;
+                    &:hover {
+                        background-color: red;
+                        opacity: 0.8;
+                    }
+                }
+            }
+            button+button {
+                background-color: green;
+                color: #fff;
+                &:hover {
+                    opacity: 0.8;
+                }
+            }
+        }
+    }
+}
