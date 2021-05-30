@@ -4,6 +4,20 @@
     box-sizing: border-box;
 }
 
+html {
+    font-size: 62.5%;
+    /* 1rem = 10px */
+    @media (min-width: 1981px) {
+        font-size: 80%;
+    }
+    @media (max-width: 760px) {
+        font-size: 60%;
+    }
+    @media (max-width: 600px) {
+        font-size: 52.5%;
+    }
+}
+
 body {
     background: #ddd;
     font-family: Open sans, sans-serif;
