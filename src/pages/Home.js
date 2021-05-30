@@ -99,14 +99,6 @@ export default function Home() {
     }
   }, [tasks, columns]);
 
-  useEffect(() => {
-    if ((modalTask.isVisible, openModalColumn)) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = 'unset';
-    }
-  }, [modalTask.isVisible, openModalColumn]);
-
   return (
     <div className={styles.container}>
       <h1>Projeto Kanban</h1>
