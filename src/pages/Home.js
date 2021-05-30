@@ -23,6 +23,23 @@ export default function Home() {
   const [openModalColumn, setOpenModalColumn] = useState(false);
   const [nameColumn, setNameColumn] = useState('');
 
+  const direction = 1;
+  const handleMoveNext = (indexC, id, direction) => {
+    const newTasks = tasks.map((item) =>
+      item.id === id ? { ...item, column: columns[indexC + direction] } : item,
+    );
+
+    setTasks(newTasks);
+  };
+
+  const handleMovePrev = (indexC, id, direction) => {
+    const newTasks = tasks.map((item) =>
+      item.id === id ? { ...item, column: columns[indexC - direction] } : item,
+    );
+
+    setTasks(newTasks);
+  };
+
   const addColumn = (nameColumn) => {
     if (nameColumn === '') return;
     setColumns([...columns, nameColumn]);
