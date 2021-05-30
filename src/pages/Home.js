@@ -1,8 +1,4 @@
 import { useState, useEffect } from 'react';
-/*import Done from '../components/Done';
-import Progress from '../components/Progress';
-import TaskList from '../components/TaskList';
-import ToDo from '../components/ToDo';*/
 import TaskModal from '../components/TaskModal';
 import TaskModalColumn from '../components/TaskModalColumn';
 import styles from '../styles/styles.module.scss';
@@ -134,23 +130,61 @@ export default function Home() {
       <section className={styles.content}>
         {columns?.map((column, indexC) => {
           return (
-            <div className={styles.columnToDo} key={indexC}>
-              <div className={styles.titleNewColumn}>
+            <div
+              className={
+                indexC === 0
+                  ? styles.columnToDo
+                  : indexC === 1
+                  ? styles.columnProgress
+                  : indexC === 2
+                  ? styles.columnDone
+                  : styles.columnGereneric
+              }
+              key={indexC}
+            >
+              <div className={styles.titleColumn}>
                 <h2>{column}</h2>
-                <button onClick={() => removeColumn(indexC)}>X</button>
+                <button onClick={() => removeColumn(indexC)}>
+                  <img src={closeIcon} alt="Excluir Coluna" />
+                </button>
               </div>
 
-              {/*<TaskList tasks={tasks} />*/}
+              {tasks
+                .filter((e) => e.column === column)
+                .map((task, indexT) => (
+                  <div className={styles.cardTask} key={indexT}>
+                    <div>
+                      <h3>{task.title}</h3>
+                      <button onClick={() => removeTask(task.id)}></button>
+                    </div>
 
-              {tasks.map((task, indexT) => (
-                <div className={styles.cardTask} key={indexT}>
-                  <h3>{task}</h3>
-                  <div>Tag{indexC + 1}</div>
-                  <button onClick={() => removeTask(indexT)}>Remover</button>
-                </div>
-              ))}
-              <button onClick={() => setOpenModal(true)}>
-                + Adicionar outra tarefa
+                    <div className={indexC === 0 && styles.reverseIcon}>
+                      <button
+                        onClick={() =>
+                          handleMovePrev(indexC, task.id, direction)
+                        }
+                        className={indexC === 0 && styles.noIcon}
+                      ></button>
+
+                      <button
+                        onClick={() =>
+                          handleMoveNext(indexC, task.id, direction)
+                        }
+                        className={
+                          indexC === columns.length - 1 && styles.noIcon
+                        }
+                      ></button>
+                    </div>
+                    <span>Tag {indexC + 1}</span>
+                  </div>
+                ))}
+
+              <button
+                onClick={() => setModalTask({ isVisible: true, column })}
+                className={styles.btnNewTask}
+              >
+                <img src={plusIconWhite} alt="Adicionar outra tarefa" />
+                <p>Adicionar outro cartão</p>
               </button>
             </div>
           );
@@ -160,7 +194,8 @@ export default function Home() {
           className={styles.buttonNewColumn}
           onClick={() => setOpenModalColumn(true)}
         >
-          + Adicionar outra lista
+          <img src={plusIconGray} alt="Adicionar outra tarefa" />
+          <p>Adicionar outra lista</p>
         </button>
       </section>
     </div>
