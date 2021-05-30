@@ -6,11 +6,19 @@ import ToDo from '../components/ToDo';*/
 import TaskModal from '../components/TaskModal';
 import TaskModalColumn from '../components/TaskModalColumn';
 import styles from '../styles/styles.module.scss';
+import { v4 as uuidv4 } from 'uuid';
+
+import closeIcon from '../assets/close-gray.png';
+import plusIconWhite from '../assets/plus-white.svg';
+import plusIconGray from '../assets/plus-gray.svg';
 
 export default function Home() {
   const [tasks, setTasks] = useState([]);
   const [text, setText] = useState('');
-  const [openModal, setOpenModal] = useState(false);
+  const [modalTask, setModalTask] = useState({
+    isVisible: false,
+    column: '',
+  });
   const [columns, setColumns] = useState([]);
   const [openModalColumn, setOpenModalColumn] = useState(false);
   const [nameColumn, setNameColumn] = useState('');
@@ -31,14 +39,16 @@ export default function Home() {
 
   const addTask = (task) => {
     if (text === '') return;
-    setTasks([...tasks, task]);
-    setOpenModal(false);
+    setTasks([
+      ...tasks,
+      { column: modalTask.column, title: task, id: uuidv4() },
+    ]);
+    setModalTask({ ...modalTask, isVisible: false });
     setText('');
   };
 
-  const removeTask = (index) => {
-    const newTasks = [...tasks];
-    newTasks.splice(index, 1);
+  const removeTask = (id) => {
+    const newTasks = tasks.filter((item) => item.id !== id);
 
     setTasks(newTasks);
   };
@@ -77,22 +87,22 @@ export default function Home() {
   }, [tasks, columns]);
 
   useEffect(() => {
-    if (openModal) {
+    if ((modalTask.isVisible, openModalColumn)) {
       document.body.style.overflow = 'hidden';
     } else {
       document.body.style.overflow = 'unset';
     }
-  }, [openModal]);
+  }, [modalTask.isVisible, openModalColumn]);
 
   return (
     <div className={styles.container}>
       <h1>Projeto Kanban</h1>
 
-      {openModal && (
+      {modalTask.isVisible && (
         <TaskModal
           setText={setText}
           addTask={() => addTask(text)}
-          onClose={() => setOpenModal(false)}
+          onClose={() => setModalTask({ ...modalTask, isVisible: false })}
         />
       )}
 
@@ -105,23 +115,7 @@ export default function Home() {
       )}
 
       <section className={styles.content}>
-        {/*<ToDo
-          onClose={() => setOpenModal(true)}
-          tasks={tasks}
-          removeTask={removeTask}
-        />
-        <Progress
-          onClose={() => setOpenModal(true)}
-          tasks={tasks}
-          removeTask={removeTask}
-        />
-        <Done
-          onClose={() => setOpenModal(true)}
-          tasks={tasks}
-          removeTask={removeTask}
-        />*/}
-
-        {columns.map((column, indexC) => {
+        {columns?.map((column, indexC) => {
           return (
             <div className={styles.columnToDo} key={indexC}>
               <div className={styles.titleNewColumn}>
