@@ -12,8 +12,8 @@
         align-items: flex-start;
         gap: 15px;
         justify-items: center;
-        max-width: 90%;
         margin: 40px auto;
+        max-width: 1400px;
         .columnToDo,
         .columnProgress,
         .columnDone,
@@ -188,5 +188,22 @@
 .reverseIcon {
     button {
         margin-left: auto;
+    }
+}
+
+@media (max-width: 360px) {
+    .container {
+        .content {
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            .columnToDo,
+            .columnProgress,
+            .columnDone,
+            .columnGereneric {
+                width: 270px;
+                .cardTask {
+                    width: 250px;
+                }
+            }
+        }
     }
 }
