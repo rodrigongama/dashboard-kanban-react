@@ -18,19 +18,12 @@ export default function Home() {
   const [columns, setColumns] = useState([]);
   const [openModalColumn, setOpenModalColumn] = useState(false);
   const [nameColumn, setNameColumn] = useState('');
+  const directionLeft = -1;
+  const directionRight = 1;
 
-  const direction = 1;
-  const handleMoveNext = (indexC, id, direction) => {
+  const handleMove = (indexC, id, direction) => {
     const newTasks = tasks.map((item) =>
       item.id === id ? { ...item, column: columns[indexC + direction] } : item,
-    );
-
-    setTasks(newTasks);
-  };
-
-  const handleMovePrev = (indexC, id, direction) => {
-    const newTasks = tasks.map((item) =>
-      item.id === id ? { ...item, column: columns[indexC - direction] } : item,
     );
 
     setTasks(newTasks);
@@ -153,14 +146,14 @@ export default function Home() {
                     <div className={indexC === 0 && styles.reverseIcon}>
                       <button
                         onClick={() =>
-                          handleMovePrev(indexC, task.id, direction)
+                          handleMove(indexC, task.id, directionLeft)
                         }
                         className={indexC === 0 && styles.noIcon}
                       ></button>
 
                       <button
                         onClick={() =>
-                          handleMoveNext(indexC, task.id, direction)
+                          handleMove(indexC, task.id, directionRight)
                         }
                         className={
                           indexC === columns.length - 1 && styles.noIcon
