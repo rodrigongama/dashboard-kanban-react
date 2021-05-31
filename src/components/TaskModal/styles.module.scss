@@ -1,76 +1,62 @@
-.modalOverlay {
+.modalContainer {
+    width: 400px;
+    height: 250px;
+    background: #eee;
     position: absolute;
-    top: 0;
-    bottom: -350px;
-    left: 0;
-    right: 0;
-    background-color: rgba(0, 0, 0, 0.5);
-    z-index: 9;
-    .modalContainer {
-        width: 400px;
-        height: 250px;
-        background: #eee;
-        position: absolute;
-        top: 30%;
-        left: 50%;
-        margin-top: -125px;
-        margin-left: -200px;
-        padding: 25px;
-        border-radius: 10px;
-        text-align: center;
-        z-index: 10;
-        input {
-            margin: 30px 0;
-            width: 240px;
-            height: 30px;
-        }
-        .Modalbuttons {
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            button {
-                width: 130px;
-                padding: 10px;
-                font-size: 1.6rem;
-                border-radius: 10px;
-                border: none;
-                margin-top: 10px;
-                transition: 0.5s;
-                &:first-child {
-                    background-color: #ddd;
-                    &:hover {
-                        background-color: #ff8c7d;
-                    }
+    top: 50%;
+    left: 50%;
+    margin-left: -200px;
+    margin-top: -125px;
+    padding: 25px;
+    border-radius: 10px;
+    text-align: center;
+    z-index: 10;
+    input {
+        margin: 30px 0;
+        width: 240px;
+        height: 30px;
+    }
+    .modalButtons {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        button {
+            width: 130px;
+            padding: 10px;
+            font-size: 1.6rem;
+            border-radius: 10px;
+            border: none;
+            margin-top: 10px;
+            transition: 0.5s;
+            &:first-child {
+                background-color: #ddd;
+                &:hover {
+                    background-color: #ff8c7d;
                 }
             }
-            button+button {
-                background-color: #08d195;
-                color: #fff;
-                &:hover {
-                    background-color: #59d090;
-                }
+        }
+        button+button {
+            background-color: #08d195;
+            color: #fff;
+            &:hover {
+                background-color: #59d090;
             }
         }
     }
 }
 
 @media (max-width: 654px) {
-    .modalOverlay {
-        bottom: -700px;
-        .modalContainer {
-            top: 40%;
-            width: 320px;
-            height: 220px;
-            margin-left: -160px;
-        }
+    .modalContainer {
+        top: 80%;
+        width: 320px;
+        height: 220px;
+        margin-left: -160px;
     }
 }
 
 @media (max-width: 359px) {
-    .modalOverlay {
-        .modalContainer {
-            width: 300px;
-            margin-left: -150px;
-        }
+    .modalContainer {
+        width: 300px;
+        margin-left: -150px;
     }
 }
