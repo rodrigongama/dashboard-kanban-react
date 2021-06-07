@@ -1,12 +1,13 @@
 import { useState, useEffect } from 'react';
 import TaskModal from '../components/TaskModal';
 import TaskModalColumn from '../components/TaskModalColumn';
-import styles from '../styles/styles.module.scss';
+import '../styles/styles.scss';
 import { v4 as uuidv4 } from 'uuid';
 
 import closeIcon from '../assets/close-gray.png';
 import plusIconWhite from '../assets/plus-white.svg';
 import plusIconGray from '../assets/plus-gray.svg';
+import CardTask from '../components/CardTask';
 
 export default function Home() {
   const [tasks, setTasks] = useState([]);
@@ -18,16 +19,6 @@ export default function Home() {
   const [columns, setColumns] = useState([]);
   const [openModalColumn, setOpenModalColumn] = useState(false);
   const [nameColumn, setNameColumn] = useState('');
-  const directionLeft = -1;
-  const directionRight = 1;
-
-  const handleMove = (indexC, id, direction) => {
-    const newTasks = tasks.map((item) =>
-      item.id === id ? { ...item, column: columns[indexC + direction] } : item,
-    );
-
-    setTasks(newTasks);
-  };
 
   const addColumn = (nameColumn) => {
     if (nameColumn === '') return;
@@ -51,12 +42,6 @@ export default function Home() {
     ]);
     setModalTask({ ...modalTask, isVisible: false });
     setText('');
-  };
-
-  const removeTask = (id) => {
-    const newTasks = tasks.filter((item) => item.id !== id);
-
-    setTasks(newTasks);
   };
 
   const saveTasks = (tasksSaved) => {
@@ -93,7 +78,7 @@ export default function Home() {
   }, [tasks, columns]);
 
   return (
-    <div className={styles.container}>
+    <div className="container">
       <h1>Projeto Kanban</h1>
 
       {modalTask.isVisible && (
@@ -112,61 +97,39 @@ export default function Home() {
         />
       )}
 
-      <section className={styles.content}>
+      <section className="content">
         {columns?.map((column, indexC) => {
           return (
             <div
               className={
                 indexC === 0
-                  ? styles.columnToDo
+                  ? 'columnToDo'
                   : indexC === 1
-                  ? styles.columnProgress
+                  ? 'columnProgress'
                   : indexC === 2
-                  ? styles.columnDone
-                  : styles.columnGereneric
+                  ? 'columnDone'
+                  : 'columnGereneric'
               }
               key={indexC}
             >
-              <div className={styles.titleColumn}>
+              <div className="titleColumn">
                 <h2>{column}</h2>
                 <button onClick={() => removeColumn(indexC)}>
                   <img src={closeIcon} alt="Excluir Coluna" />
                 </button>
               </div>
 
-              {tasks
-                .filter((e) => e.column === column)
-                .map((task, indexT) => (
-                  <div className={styles.cardTask} key={indexT}>
-                    <div>
-                      <h3>{task.title}</h3>
-                      <button onClick={() => removeTask(task.id)}></button>
-                    </div>
-
-                    <div className={indexC === 0 && styles.reverseIcon}>
-                      <button
-                        onClick={() =>
-                          handleMove(indexC, task.id, directionLeft)
-                        }
-                        className={indexC === 0 && styles.noIcon}
-                      ></button>
-
-                      <button
-                        onClick={() =>
-                          handleMove(indexC, task.id, directionRight)
-                        }
-                        className={
-                          indexC === columns.length - 1 && styles.noIcon
-                        }
-                      ></button>
-                    </div>
-                    <span>Tag {indexC + 1}</span>
-                  </div>
-                ))}
+              <CardTask
+                indexColumn={indexC}
+                column={column}
+                columns={columns}
+                tasks={tasks}
+                setTasks={setTasks}
+              />
 
               <button
                 onClick={() => setModalTask({ isVisible: true, column })}
-                className={styles.btnNewTask}
+                className="btnNewTask"
               >
                 <img src={plusIconWhite} alt="Adicionar outra tarefa" />
                 <p>Adicionar outro cartão</p>
@@ -176,7 +139,7 @@ export default function Home() {
         })}
 
         <button
-          className={styles.buttonNewColumn}
+          className="buttonNewColumn"
           onClick={() => setOpenModalColumn(true)}
         >
           <img src={plusIconGray} alt="Adicionar outra tarefa" />
